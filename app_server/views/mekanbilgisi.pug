@@ -1,8 +1,10 @@
-extends layout 
+extends layout
+include fonksiyonlar/yildiz
+
 block content 
     .row.page-header 
         .col-lg-12 
-            h1 Dürümhane
+            h1 #{mekanBaslik}
     .row 
         .col-xs-12.col-md-12 
             .row
@@ -13,32 +15,35 @@ block content
                         span.glyphicon.glyphicon-star
                         span.glyphicon.glyphicon-star
                         span.glyphicon.glyphicon-star
-                    p Modernevler
+                    p #{mekanDetay.adres}
                     .panel.panel-primary 
                         .panel-heading 
                             h2.panel-title Açılış Saatleri 
                         .panel-body 
+                        each saat in mekanDetay.saatler
                             p 
-                                | Pazartesi-Cuma: 12:00-04:00
-                            p 
-                                | Cumartesi-Pazar: 08:00-02:00
-                        .panel.panel-primary
-                            .panel-heading 
-                                h2.panel-title Neler Var?
-                            .panel-body 
-                                span.label.label-warning Adana Kebap
                                 | &nbsp;
-                                span.label.label-warning Tavuk Izgara
+                                | #{saat.gunler}: &nbsp; 
+                                if (saat.kapali)
+                                    | Kapalı
+                                else
+                                    | &nbsp; #{saat.acilis} - #{saat.kapanis}  
+
+                    .panel.panel-primary
+                        .panel-heading 
+                            h2.panel-title Neler Var?
+                        .panel-body 
+                            each imkan in mekanDetay.imkanlar
+                                span.label.label-warning= imkan
                                 | &nbsp;
-                                span.label.label-warning Köfte
-                                | &nbsp;
+
                 .col-xs-12.col-sm-6             
                     .panel.panel-primary 
                         .panel-heading 
                             h2.panel-title Konum Bilgisi 
                         .panel-body 
-                            -var enlem= 37.77946874172194
-                            -var boylam= 30.551010230108623
+                            -var enlem= mekanDetay.koordinatlar.enlem
+                            -var boylam= mekanDetay.koordinatlar.boylam
                             img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center='+enlem+','+boylam+
                             '&zoom=12&size=600x400&markers='+enlem+','+boylam+'&key=AIzaSyCmmKygTpBzHGOZEciJpAdxC9v_tWHagnE')
     .row 
@@ -48,39 +53,14 @@ block content
                     a.btn.btn-default.pull-right(href='/mekan/yorum/yeni') Yorum Ekle
                     h2.panel-title Müşteri Yorumları
                 .panel-body.review-container
-                    .row 
-                        .review 
-                            .well.well-sm.review-header
-                                span.rating 
-                                span.review-author Ceyhun Boran
-                                small.reviewTimestamp &nbsp; 15 Eylül 2022
-                                span.rating 
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                            .col-xs-12 
-                                p Adana kebap gerçekten muhteşemdi.
-    .row 
-        .col-xs-12 
-            .panel.panel-primary
-                .panel-heading
-                    a.btn.btn-default.pull-right(href='/mekan/yorum/yeni') Yorum Ekle
-                    h2.panel-title Müşteri Yorumları
-                .panel-body.review-container
-                    .row 
-                        .review 
-                            .well.well-sm.review-header
-                                span.review-author Tahsin Gül
-                                small.reviewTimestamp &nbsp; 4 Ekim 2022
-                                | &nbsp;
-                                span.rating
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star
-                                span.glyphicon.glyphicon-star-empty
-                            .col-xs-12 
-                                p Tavuk denedim yanında verdikleri salatalar ve mezeler de çok güzeldi.
-                                
+                    each yorum in mekanDetay.yorumlar
+                        .row 
+                            .review
+                                .well.well-sm.review-header
+                                    span.rating
+                                        +puanOlustur(yorum.puan)
+                                        | &nbsp;
+                                    span.review-author #{yorum.yorumYapan}
+                                    small.reviewTimestamp &nbsp; #{yorum.tarih}
+                                .col-xs-12
+                                    p #{yorum.yorumMetni}
