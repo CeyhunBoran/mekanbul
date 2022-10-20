@@ -44,8 +44,7 @@ block content
                         .panel-body 
                             -var enlem= mekanDetay.koordinatlar.enlem
                             -var boylam= mekanDetay.koordinatlar.boylam
-                            img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center='+enlem+','+boylam+
-                            '&zoom=12&size=600x400&markers='+enlem+','+boylam+'&key=AIzaSyCmmKygTpBzHGOZEciJpAdxC9v_tWHagnE')
+                            img.img-responsive.img-rounded(src='http://maps.googleapis.com/maps/api/staticmap?center='+enlem+','+boylam+'&zoom=12&size=600x400&markers='+enlem+','+boylam+'&key=AIzaSyCmmKygTpBzHGOZEciJpAdxC9v_tWHagnE')
     .row 
         .col-xs-12 
             .panel.panel-primary
@@ -59,7 +58,6 @@ block content
                                 .well.well-sm.review-header
                                     span.rating
                                         +puanOlustur(yorum.puan)
-                                        | &nbsp;
                                     span.review-author #{yorum.yorumYapan}
                                     small.reviewTimestamp &nbsp; #{yorum.tarih}
                                 .col-xs-12
