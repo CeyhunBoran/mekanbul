@@ -3,7 +3,7 @@ var dbURI = 'mongodb+srv://ceyhun:1234@mekanbul.poecnq3.mongodb.net/?retryWrites
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.connection.on('connected', function () {
-    console.log(dbURI + 'Adresindeki Veritabanina Baglanildi\n');
+    console.log(dbURI + ' Adresindeki Veritabanina Baglanildi\n');
 });
 
 mongoose.connection.on('error', function (err) {

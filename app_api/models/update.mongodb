@@ -1,14 +1,4 @@
-const database = 'mekanbul';
-use(database);
-db.mekanlar.updateOne({"ad":"Dürümhane"},
-  {$push: {"yorumlar": 
-    {
-      "_id": ObjectId(),
-      "yorumYapan": "Ceyhun Boran",
-      "puan": 5,
-      "yorumMetni": "Literally mukemmel abi...",
-      "tarih": new Date()
-    }
-  }
-}
-)
+
+db.mekanlar.find()
+;
+  
