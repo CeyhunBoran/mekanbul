@@ -1,6 +1,12 @@
 # mekanbul
 # MekanBul REST API Adresleri #
 
+**Thunder Client Koleksiyon testi** <br>
+![koleksiyon test resmi](https://github.com/CeyhunBoran/mekanbul/blob/odev-6/Resimler/testRunCollection.png) <br>
+
+**Npm Run Test** <br>
+![test resmi](https://github.com/CeyhunBoran/mekanbul/blob/odev-6/Resimler/test.png) <br>
+
 **1. Girilen Konum Civarındaki Mekanları Listele** <br>
 [https://mekanbul-main.ceyhunboran.repl.co/api/mekanlar?enlem=37.83&boylam=30.52](https://mekanbul-main.ceyhunboran.repl.co/api/mekanlar?enlem=37.83&boylam=30.52) <br>
 ![mekan resmi](https://github.com/CeyhunBoran/mekanbul/blob/odev-5/Resimler/mekanlariListele.png) <br>
