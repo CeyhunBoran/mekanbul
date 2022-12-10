@@ -4,7 +4,8 @@ var express = require('express');
 const { default: mongoose } = require('mongoose');
 var router = express.Router();
 var apiSecenekleri = {
-  sunucu: "https://mekanbul.ceyhunboran.repl.co",
+  sunucu: "localhost:3000",
+  // sunucu: "https://mekanbul.ceyhunboran.repl.co",
   apiYolu: '/api/mekanlar/'
 };
 var mesafeyiFormatla = function (mesafe) {
@@ -104,7 +105,7 @@ const yorumEkle = function (req, res) {
   if(!mekanAdi)
   res.redirect("/mekan/"+ mekanid);
   else res.render("yorumekle",{
-    baslik: mekanAdi + "mekanına yorum ekle"
+    baslik: mekanAdi + " mekanına yorum ekle"
   });
 };
 

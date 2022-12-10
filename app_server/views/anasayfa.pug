@@ -14,15 +14,14 @@ block content
       .col-xs-12.col-sm-12 
         .col-xs-12.list-group-item
           h4 
-            -var mekanid=mekan._id 
+            -var mekanid=mekan._id
             a(href='/mekan/'+mekanid)= mekan.ad
             small &nbsp;
             +puanOlustur(mekan.puan)
           span.badge.pull-right.badge-default #{mekan.mesafe}
-          p.address #{mekan.adres} 
+          p.address #{mekan.adres}  
           p   
             each imkan in mekan.imkanlar
-              span.label.label-danger #{imkan}
-              | &nbsp;
-                
-              
+             span.label.label-warning #{imkan} 
+             |&nbsp;
+            
