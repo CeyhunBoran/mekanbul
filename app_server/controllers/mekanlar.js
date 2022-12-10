@@ -1,6 +1,7 @@
 /*jshint esversion: 9 */
 const axios = require('axios');
 var express = require('express');
+const { default: mongoose } = require('mongoose');
 var router = express.Router();
 var apiSecenekleri = {
   sunucu: "https://mekanbul.ceyhunboran.repl.co",
@@ -88,6 +89,7 @@ const mekanBilgisi = function (req, res) {
   axios
     .get(apiSecenekleri.sunucu + apiSecenekleri.apiYolu + req.params.mekanid)
     .then (function(response) {
+      req.session.mekanAdi = response.data.ad;
       detaySayfasiOlustur(res, response.data);
     })
     .catch(function(hata) {
@@ -97,10 +99,49 @@ const mekanBilgisi = function (req, res) {
 };
 
 const yorumEkle = function (req, res, next) {
-  res.render('yorumekle', { title: 'Yorum ekle' });
+  var mekanAdi = req.session.mekanAdi;
+  mekanid = req.params.mekanid;
+  if (!mekanAdi) {
+    res.redirect('/mekan/' + mekanid);
+  }
+  else res.render('yorumekle', {
+    baslik: mekanAdi + ' Mekanına Yorum Ekle',
+  });
 };
+
+const yorumumuEkle = function (req, res) {
+  var gonderilenYorum, mekanid;
+  mekanid = req.params.mekanid;
+  if(!req.body.adsoyad || !req.body.yorum) {
+    res.redirect('/mekan/' + mekanid + '/yorum/yeni?hata=evet');
+  } else {
+    gonderilenYorum = {
+      yorumYapan: req.body.adsoyad,
+      puan: parseInt(req.body.puan, 10),
+      yorumMetni: req.body.yorum
+    };
+    axios
+      .post(
+        apiSecenekleri.sunucu + apiSecenekleri.apiYolu + mekanid + '/yorumlar',
+        gonderilenYorum
+      )
+      .then(function() {
+        res.redirect('/mekan/' + mekanid);
+      })
+      .catch(function(hata) {
+        hataGoster(req, res, hata);
+      });
+  }
+};
+
+var yorumSema = new mongoose.Schema({
+  yorumYapan: {type: String, required: true},
+  puan: {type: Number, default:0, min: 0, max: 5},
+  yorumMetni: {type: String, required: true},
+  tarih: {type: Date, default: Date.now}
+});
 
 module.exports =
 {
-  anaSayfa, mekanBilgisi, yorumEkle
+  anaSayfa, mekanBilgisi, yorumEkle, yorumumuEkle
 };
