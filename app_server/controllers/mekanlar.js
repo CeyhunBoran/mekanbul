@@ -4,8 +4,7 @@ var express = require('express');
 const { default: mongoose } = require('mongoose');
 var router = express.Router();
 var apiSecenekleri = {
-  sunucu: "localhost:3000",
-  // sunucu: "https://mekanbul.ceyhunboran.repl.co",
+  sunucu: "https://mekanbul.ceyhunboran.repl.co",
   apiYolu: '/api/mekanlar/'
 };
 var mesafeyiFormatla = function (mesafe) {
