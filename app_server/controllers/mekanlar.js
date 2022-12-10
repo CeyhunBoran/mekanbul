@@ -98,38 +98,36 @@ const mekanBilgisi = function (req, res) {
   );
 };
 
-const yorumEkle = function (req, res, next) {
+const yorumEkle = function (req, res) {
   var mekanAdi = req.session.mekanAdi;
   mekanid = req.params.mekanid;
-  if (!mekanAdi) {
-    res.redirect('/mekan/' + mekanid);
-  }
-  else res.render('yorumekle', {
-    baslik: mekanAdi + ' Mekanına Yorum Ekle',
+  if(!mekanAdi)
+  res.redirect("/mekan/"+ mekanid);
+  else res.render("yorumekle",{
+    baslik: mekanAdi + "mekanına yorum ekle"
   });
 };
 
-const yorumumuEkle = function (req, res) {
+const yorumumuEkle = function (req, res,){
   var gonderilenYorum, mekanid;
   mekanid = req.params.mekanid;
-  if(!req.body.adsoyad || !req.body.yorum) {
-    res.redirect('/mekan/' + mekanid + '/yorum/yeni?hata=evet');
-  } else {
+  if(!req.body.adsoyad || !req.body.yorum){
+    res.redirect("/mekan/" +mekanid+ "/yorum/yeni?hata=evet");
+  }else{
     gonderilenYorum = {
       yorumYapan: req.body.adsoyad,
-      puan: parseInt(req.body.puan, 10),
-      yorumMetni: req.body.yorum
+      puan: parseInt(req.body.puan ,10),
+      yorumMetni: req.body.yorum,
     };
     axios
       .post(
-        apiSecenekleri.sunucu + apiSecenekleri.apiYolu + mekanid + '/yorumlar',
-        gonderilenYorum
+        apiSecenekleri.sunucu + apiSecenekleri.apiYolu + mekanid + "/yorumlar", gonderilenYorum
       )
-      .then(function() {
-        res.redirect('/mekan/' + mekanid);
+      .then(function(){
+        res.redirect("/mekan/"+ mekanid);
       })
-      .catch(function(hata) {
-        hataGoster(req, res, hata);
+      .catch(function(hata){
+        hataGoster(req,res,hata);
       });
   }
 };
